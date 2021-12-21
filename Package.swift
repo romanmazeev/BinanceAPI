@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "BinanceAPI",
     platforms: [
-        .macOS(.v10_12)
+        .macOS(.v10_15)
     ],
     products: [
         .library(name: "BinanceAPI", targets: ["BinanceAPI"])
