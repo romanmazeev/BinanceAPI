@@ -6,6 +6,9 @@
 //
 
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 public typealias SuccessCallbackEmpty = () -> Void
 public typealias SuccessCallback<T: Codable> = (T) -> Void
