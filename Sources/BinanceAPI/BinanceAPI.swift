@@ -76,8 +76,8 @@ public class BinanceAPI {
     private func runRequest<T: Codable>(request: URLRequest, success: SuccessCallback<T>? = nil, failure: FailureCallback? = nil) {
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard let data = data else { return }
-            print(#function, #line, "⇨", String(data: data, encoding: .utf8))
-            print(#function, #line, "⇨", (response as? HTTPURLResponse)?.statusCode)
+            print(#function, #line, "⇨", String(data: data, encoding: .utf8) ?? "")
+            print(#function, #line, "⇨", (response as? HTTPURLResponse)?.statusCode ?? "")
             do {
                 let obj = try self.decoder.decode(T.self, from: data)
                 success?(obj)
@@ -91,9 +91,9 @@ public class BinanceAPI {
     private func runRequest(request: URLRequest, success: SuccessCallbackEmpty? = nil, failure: FailureCallback? = nil) {
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let data = data {
-                print(#function, #line, "⇨", String(data: data, encoding: .utf8))
+                print(#function, #line, "⇨", String(data: data, encoding: .utf8) ?? "")
             }
-            print(#function, #line, "⇨", (response as? HTTPURLResponse)?.statusCode)
+            print(#function, #line, "⇨", (response as? HTTPURLResponse)?.statusCode ?? "")
             guard let response = response as? HTTPURLResponse else { return }
             if response.statusCode == 200 {
                 success?()

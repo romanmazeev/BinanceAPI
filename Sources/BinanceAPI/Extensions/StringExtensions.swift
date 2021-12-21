@@ -3,7 +3,7 @@ import CryptoSwift
 
 extension String {
 
-    func hmac(secret: String, variant: HMAC.Variant = .sha256) -> String? {
+    func hmac(secret: String, variant: HMAC.Variant = .sha2(.sha256)) -> String? {
         do {
             let hmac = try HMAC(key: secret, variant: variant)
             let result = try hmac.authenticate([UInt8](self.utf8))
