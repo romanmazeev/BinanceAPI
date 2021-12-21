@@ -27,6 +27,6 @@ public struct PriceQuantity: Codable {
         var container = encoder.unkeyedContainer()
         try container.encode(price)
         try container.encode(quantity)
-        try container.encode([])
+//        try container.encode([])
     }
 }
