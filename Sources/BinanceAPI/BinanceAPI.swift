@@ -76,10 +76,14 @@ public class BinanceAPI {
         return request
     }
 
-    private func runRequest<T: Codable>(request: URLRequest, success: SuccessCallback<T>? = nil, failure: FailureCallback? = nil) {
+    private func runRequest<T: Codable>(request: URLRequest, success: SuccessCallback<T>? = nil, failure: FailureCallback? = nil, responseHandler: ((URLResponse) -> Void)? = nil) {
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let error = error {
                 failure?(error)
+            }
+            
+            if let response = response {
+                responseHandler?(response)
             }
 
             guard let data = data else { return }
@@ -238,9 +242,9 @@ public class BinanceAPI {
         runRequest(request: request, success: success, failure: failure)
     }
 
-    public func placeOrder(params: [String: Any], success: SuccessCallback<OrderResponse>? = nil, failure: FailureCallback? = nil) {
+    public func placeOrder(params: [String: Any], success: SuccessCallback<OrderResponse>? = nil, failure: FailureCallback? = nil, response: ((URLResponse) -> Void)? = nil) {
         guard let request = self.signedRequest(for: "v3/order", method: .post, params: params) else { return }
-        runRequest(request: request, success: success, failure: failure)
+        runRequest(request: request, success: success, failure: failure, responseHandler: response)
     }
 
     public func getOrder(symbol: String, orderId: Int, success: SuccessCallback<Order>? = nil, failure: FailureCallback? = nil) {
