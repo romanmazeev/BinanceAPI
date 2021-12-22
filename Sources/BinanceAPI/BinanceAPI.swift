@@ -78,6 +78,10 @@ public class BinanceAPI {
 
     private func runRequest<T: Codable>(request: URLRequest, success: SuccessCallback<T>? = nil, failure: FailureCallback? = nil) {
         URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                failure?(error)
+            }
+
             guard let data = data else { return }
             print(#function, #line, "⇨", String(data: data, encoding: .utf8) ?? "")
             print(#function, #line, "⇨", (response as? HTTPURLResponse)?.statusCode ?? "")
